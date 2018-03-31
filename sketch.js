@@ -1,14 +1,27 @@
 const s = 40;
-const width = s * 10 + 1;
-const height = s * 10 + 1;
-const totalMines = 10;
+const cr = 20;
+const width = s * cr + 1;
+const height = s * cr + 1;
+const totalMines = 100;
 let cols, rows, grid;
+
+gameOver = () => {
+  for(let i = 0; i < cols; i++) {
+    for(let j = 0; j < rows; j++) {
+      grid[i][j].revealed = true;
+    }
+  }
+}
 
 mousePressed = () => {
   for(let i = 0; i < cols; i++) {
     for(let j = 0; j < rows; j++) {
       if(grid[i][j].contains(mouseX, mouseY)) {
         grid[i][j].reveal();
+
+        if(grid[i][j].mine) {
+          gameOver();
+        }
       }
     }
   }

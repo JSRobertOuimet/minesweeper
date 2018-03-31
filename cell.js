@@ -39,24 +39,12 @@ Cell.prototype.show = function() {
   }
 }
 
-Cell.prototype.contains = function(x, y) {
-  return (
-    x > this.x &&
-    x < this.x + this.s &&
-    y > this.y &&
-    y < this.y + this.s
-  );
-}
-
-Cell.prototype.reveal = function() {
-  this.revealed = true;
-}
-
 Cell.prototype.countMines = function() {
   let total = 0;
   
   if(this.mine) {
-    return -1;
+    this.minesCount = -1;
+    return;
   }
 
   for(let xOff = -1; xOff <= 1; xOff++) {
@@ -75,4 +63,38 @@ Cell.prototype.countMines = function() {
   }
 
   this.minesCount = total;
+}
+
+Cell.prototype.contains = function(x, y) {
+  return (
+    x > this.x &&
+    x < this.x + this.s &&
+    y > this.y &&
+    y < this.y + this.s
+  );
+}
+
+Cell.prototype.reveal = function() {
+  this.revealed = true;
+
+  if(this.minesCount === 0) {
+    this.floodFill();
+  }
+}
+
+Cell.prototype.floodFill = function() {
+  for(let xOff = -1; xOff <= 1; xOff++) {
+    for(let yOff = -1; yOff <= 1; yOff++) {
+      let i = this.i + xOff;
+      let j = this.j + yOff;
+
+      if(i > -1 && i < cols && j > -1 && j < rows) {
+        let neighbour = grid[i][j];
+
+        if(!neighbour.mine && !neighbour.revealed) {
+          neighbour.reveal();
+        }
+      }
+    }
+  }
 }
