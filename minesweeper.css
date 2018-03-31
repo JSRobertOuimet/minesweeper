@@ -1,0 +1,39 @@
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 2px 2px black;
+  background-color: teal;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 80px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 80px);
+}
+
+.resetBtn {
+  padding: 10px 15px !important;
+}
+
+h1 {
+  margin-bottom: 45px;
+  font-size: 30px;
+}

@@ -1,8 +1,8 @@
 const s = 40;
-const cr = 20;
+const cr = 10;
 const width = s * cr + 1;
 const height = s * cr + 1;
-const totalMines = 100;
+const totalMines = 20;
 let cols, rows, grid;
 
 gameOver = () => {
@@ -29,34 +29,29 @@ mousePressed = () => {
 
 make2DArr = (cols, rows) => {
   const arr = new Array(cols);
-  
+
   for(let i = 0; i < arr.length; i++) {
     arr[i] = new Array(rows);
   }
-  
+
   return arr;
 }
 
-
-// ====================
-// P5 Stuff
-// ====================
-
 setup = () => {
+  let container = document.querySelector('.container');
+  let canvas = createCanvas(width, height);
   let options = [];
 
-  createCanvas(width, height);
-  
   cols = floor(width / s);
   rows = floor(height / s);
   grid = make2DArr(cols, rows);
-  
+
   for(let i = 0; i < cols; i++) {
     for(let j = 0; j < rows; j++) {
       grid[i][j] = new Cell(i, j, s);
     }
   }
-  
+
   for(let i = 0; i < cols; i++) {
     for(let j = 0; j < rows; j++) {
       options.push([i, j]);
@@ -72,12 +67,14 @@ setup = () => {
     options.splice(index, 1);
     grid[i][j].mine = true;
   }
-  
+
   for(let i = 0; i < cols; i++) {
     for(let j = 0; j < rows; j++) {
       grid[i][j].countMines();
     }
   }
+  
+  canvas.parent(container);
 }
 
 draw = () => {
